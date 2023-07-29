@@ -1,0 +1,5 @@
+waybackpy
+requests
+beautifulsoup4
+python-dotenv
+PyGithub
