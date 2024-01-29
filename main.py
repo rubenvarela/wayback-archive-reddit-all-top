@@ -1,6 +1,5 @@
 from waybackpy import WaybackMachineSaveAPI
 import requests
-import bs4
 import re
 import random
 from dotenv import load_dotenv
@@ -9,16 +8,12 @@ import os
 
 
 def get_ua():
-    url = "https://www.whatismybrowser.com/guides/the-latest-user-agent/firefox"
+    url = "https://www.useragents.me/api"
     r1 = requests.get(url)
-    soup = bs4.BeautifulSoup(r1.content, "html.parser")
+    elements = r1.json()['data']
 
-    elements = soup.find_all(string=re.compile("Mozilla.*Linux"))
-    choices = list(range(len(elements)))
-    choice = random.choice(choices)
-
-    element = elements[choice]
-    ua = str(element)
+    random.shuffle(elements)
+    ua = elements[0]['ua']
 
     return ua
 
