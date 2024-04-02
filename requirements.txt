@@ -2,3 +2,4 @@ waybackpy
 requests
 python-dotenv
 PyGithub
+beautifulsoup4

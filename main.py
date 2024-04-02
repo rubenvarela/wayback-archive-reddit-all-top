@@ -5,15 +5,20 @@ import random
 from dotenv import load_dotenv
 import github #PyGithub
 import os
+from bs4 import BeautifulSoup
+import json
 
 
 def get_ua():
-    url = "https://www.useragents.me/api"
+    url = "https://www.useragents.me/"
     r1 = requests.get(url)
-    elements = r1.json()['data']
-
-    random.shuffle(elements)
-    ua = elements[0]['ua']
+    soup = BeautifulSoup(r1.content, 'html.parser')
+    elements = soup.select('#most-common-desktop-useragents-json-csv textarea')
+    element = elements[0]
+    json_text = element.text
+    json_data = json.loads(json_text)
+    random.shuffle(json_data)
+    ua = json_data[0]['ua']
 
     return ua
 
